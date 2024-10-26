@@ -2,6 +2,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function main() {
+    console.log("Start seeding");
     const defaultLanguages = [
         {
             name: 'Asciidoc',
@@ -9,8 +10,8 @@ async function main() {
             keywords: ['documentation',],
             version: '1.2.0',
             creator: 'Bichler Bastian',
-            filepath: 'asciidoc/doc',
-            picturepath: 'asciidoc/doc/_static/'
+            filepath: 'asciidoc/ascii.html',
+            picturepath: 'asciidoc/'
         },
         {
             name: 'CSS',
@@ -18,8 +19,8 @@ async function main() {
             keywords: ['coding', 'styling', 'web-development'],
             version: '1.1.0',
             creator: 'Bichler Bastian',
-            filepath: 'css/doc',
-            picturepath: 'css/doc/_static/'
+            filepath: 'css/css.html',
+            picturepath: 'css/'
         },
         {
             name: 'DevTools',
@@ -27,7 +28,7 @@ async function main() {
             keywords: ['tool', 'debugging',],
             version: '1.0.0',
             creator: 'Bichler Bastian',
-            filepath: 'devTools/doc',
+            filepath: 'devTools/devtools.html',
             picturepath: 'devTools/doc/_static/'
         },
         {
@@ -36,8 +37,8 @@ async function main() {
             keywords: ['tool', 'coding', 'backup',],
             version: '2.0.0',
             creator: 'Bichler Bastian',
-            filepath: 'git/doc',
-            picturepath: 'git/doc/_static/'
+            filepath: 'git/_build/html/index.html',
+            picturepath: 'git/_static/'
         },
         {
             name: 'Java',
@@ -45,17 +46,17 @@ async function main() {
             keywords: ['coding', 'sql', 'software-development'],
             version: '2.2.0',
             creator: 'Bichler Bastian',
-            filepath: 'java/doc',
-            picturepath: 'java/doc/_static/'
+            filepath: 'java/_build/html/index.html',
+            picturepath: 'java/_static/'
         },
         {
             name: 'Linux',
             description: 'Generelle Linux Befehle',
-            keywords: ['os', 'tools'],
+            keywords: ['os', 'tool'],
             version: '1.0.0',
             creator: 'Bichler Bastian',
-            filepath: 'linux/doc',
-            picturepath: 'linux/doc/_static/'
+            filepath: 'linux/_build/html/index.html',
+            picturepath: 'linux/_static/'
         },
         {
             name: 'PHP',
@@ -63,17 +64,17 @@ async function main() {
             keywords: ['coding', 'sql', 'web-development'],
             version: '1.0.0',
             creator: 'Bichler Bastian',
-            filepath: 'php/doc',
-            picturepath: 'php/doc/_static/'
+            filepath: 'php/php.html',
+            picturepath: 'php/'
         },
         {
             name: 'Python',
             description: 'Eine Python Dokumentation über die Grundlagen CLI Programme',
-            keywords: ['coding', 'cli', 'tools', 'software-development'],
+            keywords: ['coding', 'cli', 'tool', 'software-development'],
             version: '1.5.0',
             creator: 'Bichler Bastian',
-            filepath: 'python/doc',
-            picturepath: 'python/doc/_static/'
+            filepath: 'python/_build/html/index.html',
+            picturepath: 'python/_static/'
         },
         {
             name: 'Sass',
@@ -81,8 +82,8 @@ async function main() {
             keywords: ['coding', 'styling', 'web-development'],
             version: '1.0.0',
             creator: 'Bichler Bastian',
-            filepath: 'sass/doc',
-            picturepath: 'sass/doc/_static/'
+            filepath: 'sass/sass.html',
+            picturepath: 'sass/'
         },
         {
             name: 'JavaScript',
@@ -90,17 +91,17 @@ async function main() {
             keywords: ['coding', 'web-development'],
             version: '1.0.0',
             creator: 'Bichler Bastian',
-            filepath: 'javascript/doc',
-            picturepath: 'javascript/doc/_static/'
+            filepath: 'javascript/_build/html/index.html',
+            picturepath: 'javascript/_static/'
         },
         {
             name: 'Sphinx',
             description: 'Sphinx ist eine Documententation bassierend auf Pyhton linux und co',
-            keywords: ['coding', 'web-development'],
+            keywords: ['documentation'],
             version: '1.0.0',
             creator: 'Bichler Bastian',
-            filepath: 'sphinx/doc',
-            picturepath: 'sphinx/doc/_static/'
+            filepath: 'sphinx/_build/html/index.html',
+            picturepath: 'sphinx/_static/'
         },
         {
             name: 'TypeScript',
@@ -108,11 +109,13 @@ async function main() {
             keywords: ['coding', 'web-development'],
             version: '1.0.0',
             creator: 'Bichler Bastian',
-            filepath: 'typescript/doc',
-            picturepath: 'typescript/doc/_static/'
+            filepath: 'typescript/typescript.html',
+            picturepath: 'typescript/'
         },
 
     ]
+
+    await prisma.Language.deleteMany()
     for (const lang of defaultLanguages) {
         await prisma.language.upsert({
             where: { name: lang.name },
@@ -121,13 +124,13 @@ async function main() {
         });
     }
 
-
-    main()
-        .catch((e) => {
-            console.error('Fehler beim Einfügen der Standarddaten:', e);
-            process.exit(1);
-        })
-        .finally(async () => {
-            await prisma.$disconnect();
-        });
 }
+
+main()
+    .catch((e) => {
+        console.error('Fehler beim Einfügen der Standarddaten:', e);
+        process.exit(1);
+    })
+    .finally(async () => {
+        await prisma.$disconnect();
+    });

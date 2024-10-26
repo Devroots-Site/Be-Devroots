@@ -1,9 +1,12 @@
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const cors = require('cors');
 
 const app = express();
-app.use(express.json());
+app.use(express.json(), cors({
+    origin: 'http://localhost:5173'
+}));
 
 // Route für GET /api/languages
 app.get('/api/languages', async (req, res) => {
@@ -64,8 +67,8 @@ app.post('/api/languages', async (req, res) => {
 
 app.patch('/api/languages/:id', async (req, res) => {
     try {
-        const { id } = req.params; 
-        const updateData = req.body; 
+        const { id } = req.params;
+        const updateData = req.body;
 
         // Validierung, dass mindestens ein Feld zum Aktualisieren übergeben wurde
         if (Object.keys(updateData).length === 0) {
@@ -73,11 +76,11 @@ app.patch('/api/languages/:id', async (req, res) => {
         }
 
         const updatedLanguage = await prisma.language.update({
-            where: { id: parseInt(id) }, 
+            where: { id: parseInt(id) },
             data: updateData,
         });
 
-       
+
         res.status(200).json(updatedLanguage);
     } catch (error) {
         console.error('Fehler beim Aktualisieren der Sprache:', error);
