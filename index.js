@@ -5,7 +5,7 @@ const cors = require('cors');
 
 const app = express();
 app.use(express.json(), cors({
-    origin: 'http://localhost:5173'
+    origin: process.env.FRONTEND_PORT
 }));
 
 // Route für GET /api/languages
@@ -101,7 +101,7 @@ app.patch('/api/languages/:id', async (req, res) => {
 });
 
 // Server starten
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.BACKEND_PORT || 3111;
 app.listen(PORT, () => {
-    console.log(`Server läuft auf http://localhost:${PORT}`);
+    console.log(`Server läuft auf http://localhost:${process.env.BACKEND_PORT}`);
 });
