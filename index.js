@@ -5,7 +5,7 @@ const cors = require('cors');
 
 const app = express();
 app.use(express.json(), cors({
-    origin: 3110
+    origin: 'http://localhost:3110'
 }));
 
 // Route für GET /api/languages
