@@ -5,7 +5,7 @@ const cors = require('cors');
 
 const app = express();
 app.use(express.json(), cors({
-    origin: process.env.FRONTEND_PORT
+    origin: 3110
 }));
 
 // Route für GET /api/languages
