@@ -4,17 +4,34 @@ const prisma = new PrismaClient();
 const cors = require('cors');
 
 const app = express();
-app.use(express.json(), cors({
-    origin: 'http://38.242.136.128:3110'
-}));
+
+// CORS-Einstellungen: Zulassen von allen Origins
+const corsOptions = {
+    origin: '*', // Alle Origins erlauben
+    optionsSuccessStatus: 200,
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+};
+app.use(cors(corsOptions));
+app.use(express.json());
+
+// Route für GET /helloworld
+app.get('/helloworld', (req, res) => {
+    res.send("helloworld");
+});
 
 // Route für GET /api/languages
 app.get('/api/languages', async (req, res) => {
-    const languages = await prisma.language.findMany();
-    res.json(languages);
+    try {
+        const languages = await prisma.Languages.findMany();
+        res.json(languages);
+    } catch (error) {
+        console.error('Fehler beim Abrufen der Sprachen:', error);
+        res.status(500).json({ error: 'Ein interner Serverfehler ist aufgetreten.' });
+    }
 });
 
-
+// Route für POST /api/languages
 app.post('/api/languages', async (req, res) => {
     try {
         const {
@@ -38,7 +55,7 @@ app.post('/api/languages', async (req, res) => {
         }
 
         // Erstellung des neuen Language-Eintrags in der Datenbank
-        const newLanguage = await prisma.language.create({
+        const newLanguage = await prisma.Language.create({
             data: {
                 name,
                 description: description || null,
@@ -65,6 +82,7 @@ app.post('/api/languages', async (req, res) => {
     }
 });
 
+// Route für PATCH /api/languages/:id
 app.patch('/api/languages/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -75,11 +93,10 @@ app.patch('/api/languages/:id', async (req, res) => {
             return res.status(400).json({ error: 'Es muss mindestens ein Feld zum Aktualisieren übergeben werden.' });
         }
 
-        const updatedLanguage = await prisma.language.update({
+        const updatedLanguage = await prisma.Language.update({
             where: { id: parseInt(id) },
             data: updateData,
         });
-
 
         res.status(200).json(updatedLanguage);
     } catch (error) {
@@ -103,5 +120,5 @@ app.patch('/api/languages/:id', async (req, res) => {
 // Server starten
 const PORT = process.env.BACKEND_PORT || 3111;
 app.listen(PORT, () => {
-    console.log(`Server läuft auf http://localhost:${process.env.BACKEND_PORT}`);
+    console.log(`Server läuft auf http://localhost:${PORT}`);
 });
