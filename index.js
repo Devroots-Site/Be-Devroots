@@ -23,7 +23,7 @@ app.get('/helloworld', (req, res) => {
 // Route für GET /api/languages
 app.get('/api/languages', async (req, res) => {
     try {
-        const languages = await prisma.Languages.findMany();
+        const languages = await prisma.Language.findMany();
         res.json(languages);
     } catch (error) {
         console.error('Fehler beim Abrufen der Sprachen:', error);
