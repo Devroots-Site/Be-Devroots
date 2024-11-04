@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
@@ -117,7 +118,7 @@ async function main() {
 
     await prisma.Language.deleteMany()
     for (const lang of defaultLanguages) {
-        await prisma.language.upsert({
+        await prisma.Language.upsert({
             where: { name: lang.name },
             update: {}, // Keine Aktualisierung, wenn der Eintrag bereits existiert
             create: lang,
