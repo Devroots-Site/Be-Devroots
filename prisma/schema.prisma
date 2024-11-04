@@ -12,7 +12,7 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-model Language {
+model languages {
   id          Int       @id @default(autoincrement())
   name        String    @unique
   description String?

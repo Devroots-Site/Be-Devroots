@@ -116,9 +116,9 @@ async function main() {
 
     ]
 
-    await prisma.Language.deleteMany()
+    await prisma.languages.deleteMany()
     for (const lang of defaultLanguages) {
-        await prisma.Language.upsert({
+        await prisma.languages.upsert({
             where: { name: lang.name },
             update: {}, // Keine Aktualisierung, wenn der Eintrag bereits existiert
             create: lang,

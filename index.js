@@ -23,7 +23,7 @@ app.get('/helloworld', (req, res) => {
 // Route für GET /api/languages
 app.get('/api/languages', async (req, res) => {
     try {
-        const languages = await prisma.Language.findMany();
+        const languages = await prisma.languages.findMany();
         res.json(languages);
     } catch (error) {
         console.error('Fehler beim Abrufen der Sprachen:', error);
@@ -55,7 +55,7 @@ app.post('/api/languages', async (req, res) => {
         }
 
         // Erstellung des neuen Language-Eintrags in der Datenbank
-        const newLanguage = await prisma.Language.create({
+        const newLanguage = await prisma.languages.create({
             data: {
                 name,
                 description: description || null,
@@ -93,7 +93,7 @@ app.patch('/api/languages/:id', async (req, res) => {
             return res.status(400).json({ error: 'Es muss mindestens ein Feld zum Aktualisieren übergeben werden.' });
         }
 
-        const updatedLanguage = await prisma.Language.update({
+        const updatedLanguage = await prisma.languages.update({
             where: { id: parseInt(id) },
             data: updateData,
         });
