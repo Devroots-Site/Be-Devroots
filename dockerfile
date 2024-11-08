@@ -8,13 +8,19 @@ WORKDIR /app
 COPY package*.json ./
 
 # Installiere die Abhängigkeiten (einschließlich Prisma)
-RUN npm install
+RUN npm install --force
+
+# Kopiere die Prisma-Dateien explizit, falls sie in /prisma gespeichert sind
+COPY prisma ./prisma/
+
+# Kopiere die .env-Datei, damit Prisma die benötigten Variablen hat
+COPY .env .env
 
 # Kopiere den Rest des Codes in das Container-Verzeichnis
 COPY . .
 
-# Kopiere die Prisma-Dateien explizit, falls sie in /prisma gespeichert sind
-COPY prisma ./prisma/
+# Debugging-Schritt: Zeigt den Inhalt des /app-Verzeichnisses
+RUN ls -R /app
 
 # Generiere den Prisma-Client
 RUN npx prisma generate
