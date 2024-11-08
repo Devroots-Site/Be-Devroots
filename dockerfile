@@ -13,8 +13,8 @@ RUN npm install
 # Kopiere den Rest des Codes in das Container-Verzeichnis
 COPY . .
 
-# Kopiere die Prisma-Dateien explizit (optional)
-COPY prisma/schema.prisma ./prisma/
+# Kopiere die Prisma-Dateien explizit, falls sie in /prisma gespeichert sind
+COPY prisma ./prisma/
 
 # Generiere den Prisma-Client
 RUN npx prisma generate
