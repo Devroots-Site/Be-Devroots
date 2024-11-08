@@ -4,27 +4,24 @@ FROM node:18
 # Setze das Arbeitsverzeichnis
 WORKDIR /app
 
-# Kopiere die package.json und package-lock.json, bevor du npm installierst
-COPY package*.json ./
+# Installiere pnpm
+RUN npm install -g pnpm
 
-# Installiere die Abhängigkeiten (einschließlich Prisma)
-RUN npm install --force
+# Kopiere die package.json und pnpm-lock.yaml, bevor du pnpm installierst
+COPY package.json pnpm-lock.yaml ./
 
-# Kopiere die Prisma-Dateien explizit, falls sie in /prisma gespeichert sind
+# Installiere die Abhängigkeiten mit pnpm
+RUN pnpm install
+
+# Kopiere die Prisma-Dateien und die .env-Datei
 COPY prisma ./prisma/
-
-# Kopiere die .env-Datei, damit Prisma die benötigten Variablen hat
 COPY .env .env
 
 # Kopiere den Rest des Codes in das Container-Verzeichnis
 COPY . .
 
-# Debugging-Schritt: Zeigt den Inhalt des /app-Verzeichnisses
-RUN ls -R /app
-
-# Generiere den Prisma-Client
-RUN npx prisma generate --schema=./prisma/schema.prisma
-
+# Generiere den Prisma-Client explizit mit pnpm
+RUN pnpm exec prisma generate
 
 # Starte die Anwendung
-CMD ["npm", "start"]
+CMD ["pnpm", "start"]
