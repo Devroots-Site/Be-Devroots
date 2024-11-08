@@ -23,7 +23,8 @@ COPY . .
 RUN ls -R /app
 
 # Generiere den Prisma-Client
-RUN npx prisma generate
+RUN npx prisma generate --schema=./prisma/schema.prisma
+
 
 # Starte die Anwendung
 CMD ["npm", "start"]
