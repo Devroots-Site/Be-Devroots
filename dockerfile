@@ -17,12 +17,6 @@ COPY . .
 # Generiere den Prisma-Client
 RUN npx prisma generate
 
-# Führe die Migration durch und/oder seed die Datenbank (optional, falls benötigt)
-# RUN npx prisma migrate deploy
-# RUN npm run prisma:seed
-
-# Expose Port 3111
-EXPOSE 3111
 
 # Starte die Anwendung
 CMD ["npm", "start"]
