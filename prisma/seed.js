@@ -114,6 +114,28 @@ async function main() {
             picturepath: 'typescript/'
         },
 
+        {
+            name: "React Js",
+            description: "React.js ist eine JavaScript-Bibliothek, die von Facebook entwickelt wurde, um Benutzeroberflächen (UIs) für Webanwendungen zu erstellen. Sie verwendet ein komponentenbasiertes Architekturmodell, bei dem die UI in kleine, wiederverwendbare Komponenten unterteilt wird. React ermöglicht effiziente Updates und Rendering von UIs durch ein virtuelles DOM (Document Object Model), das die Performance optimiert.",
+            keywords: "{coding,web-development}",
+            version: "1.0.0",
+            created_at: "2024-11-23T13:15:53.085Z",
+            updated_at: "2024-11-23T13:15:53.085Z",
+            creator: "Bichler Bastian",
+            filepath: "react\/_build\/html\/index.html",
+            picturepath: ''
+        },
+        {
+            name: "Vue JS",
+            description: "Vue.js ist ein weiteres JavaScript-Framework zur Erstellung von UIs und Single-Page-Applications (SPAs). Es wurde von Evan You entwickelt und zeichnet sich durch seine einfache Lernkurve und Flexibilität aus. Vue kombiniert die besten Eigenschaften von Angular und React und bietet eine klare Trennung von Logik, Darstellung und Daten. Es nutzt ebenfalls ein reaktives Datenbindungssystem, das eine effiziente Aktualisierung der UI ermöglicht.",
+            keywords: "{coding,web-development}",
+            version: "1.0.0",
+            created_at: "2024-11-23T13:15:53.085Z",
+            updated_at: "2024-11-23T13:15:53.085Z",
+            creator: "Bichler Bastian",
+            filepath: "vue\/_build\/html\/index.html",
+            picturepath: "",
+        }
     ]
 
     await prisma.languages.deleteMany()

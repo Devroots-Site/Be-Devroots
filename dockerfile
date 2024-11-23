@@ -1,27 +1,20 @@
 # Verwende eine neuere Node-Version
 FROM node:18
 
+# Installiere Git, um das Repository zu klonen
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+
 # Setze das Arbeitsverzeichnis
 WORKDIR /app
 
-# Installiere pnpm
-RUN npm install -g pnpm
+# Klone das Repository
+RUN git clone https://github.com/Devroots-Site/Be-Devroots .
 
-# Kopiere die package.json und pnpm-lock.yaml, bevor du pnpm installierst
-COPY package.json pnpm-lock.yaml ./
+# Installiere die Abhängigkeiten mit npm
+RUN npm install
 
-# Installiere die Abhängigkeiten mit pnpm
-RUN pnpm install
-
-# Kopiere die Prisma-Dateien und die .env-Datei
-COPY prisma ./prisma/
-COPY .env .env
-
-# Kopiere den Rest des Codes in das Container-Verzeichnis
-COPY . .
-
-# Generiere den Prisma-Client explizit mit pnpm
-RUN pnpm exec prisma generate
+# Generiere den Prisma-Client explizit mit npm
+RUN npx prisma generate
 
 # Starte die Anwendung
-CMD ["pnpm", "start"]
+CMD ["npm", "start"]
