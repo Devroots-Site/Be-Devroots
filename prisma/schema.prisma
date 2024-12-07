@@ -16,7 +16,7 @@ model languages {
   id          Int       @id @default(autoincrement())
   name        String    @unique
   description String?
-  keywords    String[]
+  keywords    Json?
   version     String?
   created_at  DateTime  @default(now())
   updated_at  DateTime  @updatedAt

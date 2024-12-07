@@ -138,14 +138,19 @@ async function main() {
         }
     ]
 
-    await prisma.languages.deleteMany()
-    for (const lang of defaultLanguages) {
-        await prisma.languages.upsert({
-            where: { name: lang.name },
-            update: {}, // Keine Aktualisierung, wenn der Eintrag bereits existiert
-            create: lang,
-        });
+    try {
+        await prisma.languages.deleteMany()
+        for (const lang of defaultLanguages) {
+            await prisma.languages.upsert({
+                where: { name: lang.name },
+                update: {}, // Keine Aktualisierung, wenn der Eintrag bereits existiert
+                create: lang,
+            });
+        }
+    } catch (err) {
+        console.log(err);
     }
+
 
 }
 
